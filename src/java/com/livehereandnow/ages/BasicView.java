@@ -4,6 +4,7 @@ import com.livehereandnow.ages.card.AgesCard;
 import com.livehereandnow.ages.cardrow.Cardrow;
 import com.livehereandnow.ages.engine.AgesEngine;
 import com.livehereandnow.ages.exception.AgesException;
+import com.livehereandnow.ages.field.Player;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,18 @@ public class BasicView {
     private String text;
     private String debug;
     private int counter;
+     private String militaryCardOption; 
+
+    public String getMilitaryCardOption() {
+        return militaryCardOption;
+    }
+
+    public void setMilitaryCardOption(String militaryCardOption) {
+        this.militaryCardOption = militaryCardOption;
+    }
 
     public String getCurrentAge() {
-        String strAge[]={"A","I","II","III","IIII"};
+        String strAge[]={"A","I","II","III","IV"};
         return strAge[engine.getField().get當前時代()];
     }
     public int getRoundNumber() {
@@ -43,14 +53,73 @@ public class BasicView {
 
         engine.doCmd("c");
     }
-
-    public void doTakeCard(int index) throws IOException, AgesException{
-        System.out.println(" DOING... USE SEQ TO TAKE CARD, SEQ="+index);
+//
+//    public List<AgesCard> getPlayerAAA政府區(){
+//        return engine.getField().getP1().get政府區();
+//    }
+    public List<AgesCard> getPlayerAAA手牌軍事牌區(){
+        return engine.getField().getP1().get手牌軍事牌區();
+    }
+    public List<AgesCard> getPlayerAAA政府區(){
+        return engine.getField().getP1().get政府區();
+    }
+    public List<AgesCard> getPlayerAAA領袖區(){
+        return engine.getField().getP1().get領袖區();
+    }
+    public List<AgesCard> getPlayerAAA建造中的奇蹟區(){
+        return engine.getField().getP1().get建造中的奇蹟區();
+    }
+    public List<AgesCard> getPlayerAAA實驗室(){
+        return engine.getField().getP1().get實驗室();
+    }
+    public List<AgesCard> getPlayerAAA神廟區(){
+        return engine.getField().getP1().get神廟區();
+    }
+    public List<AgesCard> getPlayerAAA農場區(){
+        return engine.getField().getP1().get農場區();
+    }
+    public List<AgesCard> getPlayerAAA礦山區(){
+        return engine.getField().getP1().get礦山區();
+    }
+    public List<AgesCard> getPlayerAAA步兵區(){
+        return engine.getField().getP1().get步兵區();
+    }
+    
+    
+    
+    public void doNOTHING(int index) throws IOException, AgesException{
+        System.out.println(" DO NOTHING , SEQ="+index);
 //        engine.parser("take-card "+index);
-//        setDebug(this.getText()+"...");
-        
+//        engine.actTakeCardBySeq(index);
+
+                
     }
    
+    public void doTakeCard(int index) throws IOException, AgesException{
+//        System.out.println(" DOING... USE SEQ TO TAKE CARD, SEQ="+index);
+        engine.actTakeCardBySeq(index);
+
+                
+    }
+    public void doPlayCard(int index) throws IOException, AgesException{
+        System.out.println(" doPlayCard... , SEQ="+index);
+        engine.actPlayCardBySeq(index);                
+    }
+//    public void doPlayMilitaryCard(int index) throws IOException, AgesException{
+//        System.out.println(" doPlayMilitaryCard... , SEQ="+index);
+//        if (engine.getCurrentPlayer().equals("AAA") ){
+//           
+//        }
+////        engine.actPlayCardBySeq(index);                
+//    }
+    
+    
+//    public void doDiscardCard(int index) throws IOException, AgesException{
+//        System.out.println(" doDiscardCard... , SEQ="+index);
+////        engine.actPlayCardBySeq(index);                
+//    }
+    
+    
     public void doSubmitCommand() throws IOException, AgesException{
         engine.parser(getText());
 //        setDebug(this.getText()+"...");

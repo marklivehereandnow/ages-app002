@@ -11,29 +11,10 @@
 
     </h:head>
     <h:body>
-        <h1>better UI to develop Ages</h1>
         <h:form>
-            <h:panelGrid columns="10" cellpadding="5">
-                <p:commandButton value="New Game" action="#{basicView.doNewGame()}" update="display,cardrow,cardrow_img,age,round, player, p1hand" icon="ui-icon-check" />
-                <p:commandButton value="Start" action="#{basicView.doStart()}" update="display,cardrow,cardrow_img,age,round, player, p1hand" icon="ui-icon-check" />
-
-            </h:panelGrid>
-            <h:panelGrid columns="10" cellpadding="5">
-                <h:outputLabel for="name" value="Name:" style="font-weight:bold" />
-                <p:inputText id="name" value="#{basicView.text}" />
-                <p:commandButton value="Submit Command" action="#{basicView.doSubmitCommand()}" update="display,cardrow,cardrow_img,age,round, player, p1hand" icon="ui-icon-check" />
-                <h:outputText id="display" value="#{basicView.debug}" />
-
-            </h:panelGrid>
-            <h:panelGrid columns="10" cellpadding="5">
-                <p:commandButton value="Change Turn" action="#{basicView.doChangeTurn()}" update="display,cardrow,cardrow_img,age,round, player, p1hand" icon="ui-icon-check" />
-
-            </h:panelGrid>
-
-
-            <br></br>
             <table>
                 <tr>
+                    <td><table> <tr><td><strong>better UI to develop Ages</strong></td></tr></table></td>
                     <th style="background-color: lightcyan">Round</th>
                     <td> 
                         <h:outputText id="round" value="#{basicView.roundNumber}" />
@@ -51,51 +32,203 @@
 
                 </tr>
 
-            </table>
+            </table>    
+            <h:panelGrid columns="10" cellpadding="5">
+                <p:commandButton value="New Game" action="#{basicView.doNewGame()}" update="cardrow_img,age,round, player, p1hand" icon="ui-icon-check" />
+                <p:commandButton value="Start" action="#{basicView.doStart()}" update="cardrow_img,age,round, player, p1hand" icon="ui-icon-check" />
 
-            <h:panelGrid id="cardrow_img" columns="13" cellpadding="0">
-                <c:forEach  var="zzz" items="#{basicView.cardRowIdList}">
-                    <h:commandButton action="#{basicView.doTakeCard(zzz.seq)}" image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
-                        <f:ajax render="@this" />
-                    </h:commandButton>    
-                </c:forEach>
+
+                <h:outputLabel for="name" value="Name:" style="font-weight:bold" />
+                <p:inputText id="name" value="#{basicView.text}" />
+                <p:commandButton value="Submit Command" action="#{basicView.doSubmitCommand()}" update="cardrow_img,age,round, player, p1hand" icon="ui-icon-check" />
+
+
+
+                <p:commandButton value="Change Turn" action="#{basicView.doChangeTurn()}" update="cardrow_img,age,round, player, p1hand" icon="ui-icon-check" />
+
             </h:panelGrid>
 
+            <p:tabView id="cardrow_img">
+                <p:tab title="for civil">
+
+
+                    <h:panelGrid  columns="13" cellpadding="0">
+                        <c:forEach  var="zzz" items="#{basicView.cardRowIdList}">
+                            <h:commandButton action="#{basicView.doTakeCard(zzz.seq)}"  image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
+                                <f:ajax render="@form" />
+                            </h:commandButton>    
+                        </c:forEach>
+                    </h:panelGrid>
+                </p:tab>
+                <p:tab title="for military">
+
+                </p:tab>
+            </p:tabView>
 
 
 
-
-            <h:dataTable id="cardrow" value="#{basicView.cardRowInTable}" var="xxx" style="border-style: solid">
-
-                <h:column>
-                    <h:outputText value="#{xxx.f1}"/>
-                </h:column>
-                <h:column>
-                    <h:outputText value="#{xxx.f2}"/>
-                </h:column>
-                <h:column>
-                    <h:outputText value="#{xxx.f3}"/>
-                </h:column>
-                <h:column>
-                    <h:outputText value="#{xxx.f4}"/>
-                </h:column>
-                <h:column>
-                    <h:outputText value="#{xxx.f5}"/>
-                </h:column>
-
-            </h:dataTable>
+            <!--
+                        <h:dataTable id="cardrow" value="#{basicView.cardRowInTable}" var="xxx" style="border-style: solid">
+            
+                            <h:column>
+                                <h:outputText value="#{xxx.f1}"/>
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{xxx.f2}"/>
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{xxx.f3}"/>
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{xxx.f4}"/>
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{xxx.f5}"/>
+                            </h:column>
+            
+                        </h:dataTable>-->
 
 
             <p:tabView id="p1hand">
                 <p:tab title="AAA">
-                    <h1>AAA area</h1> 
-                    <h:panelGrid  columns="13" cellpadding="0">
-                        <c:forEach  var="zzz" items="#{basicView.p1Hand}">
-                            <h:commandButton action="#{basicView.doTakeCard(zzz.seq)}" image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
-                                <f:ajax render="@this" />
-                            </h:commandButton>    
-                        </c:forEach>
-                    </h:panelGrid>
+
+                    <table>
+                        <tr>
+                            <td>政府區</td>
+                            <td>領袖區 </td>
+                            <td>建造中的奇蹟 </td>
+                            <td>內政手牌牌區</td>
+                            <td>軍事手牌牌區
+                                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                                    <p:outputLabel for="p1_military" value="Military Card Option:" />
+                                    <p:selectOneRadio id="p1_military" value="#{basicView.militaryCardOption}">
+                                        <f:selectItem itemLabel="Action" itemValue="Action" />
+                                        <f:selectItem itemLabel="Discard" itemValue="Discard" />
+                                    </p:selectOneRadio>
+                                </h:panelGrid>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                                <h:panelGrid  columns="13" cellpadding="0">
+                                    <c:forEach  var="zzz" items="#{basicView.playerAAA政府區}">
+                                        <h:commandButton action="#{basicView.doNOTHING(zzz.seq)}" image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
+                                            <f:ajax render="@this" />
+                                        </h:commandButton>    
+                                    </c:forEach>
+                                </h:panelGrid>
+                            </td>
+                            <td>
+                                <h:panelGrid  columns="13" cellpadding="0">
+                                    <c:forEach  var="zzz" items="#{basicView.playerAAA領袖區}">
+                                        <h:commandButton action="#{basicView.doNOTHING(zzz.seq)}" image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
+                                            <f:ajax render="@this" />
+                                        </h:commandButton>    
+                                    </c:forEach>
+                                </h:panelGrid>
+
+                            </td>
+                            <td>
+                                <h:panelGrid  columns="13" cellpadding="0">
+                                    <c:forEach  var="zzz" items="#{basicView.playerAAA建造中的奇蹟區}">
+                                        <h:commandButton action="#{basicView.doNOTHING(zzz.seq)}" image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
+                                            <f:ajax render="@this" />
+                                        </h:commandButton>    
+                                    </c:forEach>
+                                </h:panelGrid>
+
+                            </td>
+                            <td>
+                                <h:panelGrid  columns="13" cellpadding="0">
+                                    <c:forEach  var="zzz" items="#{basicView.p1Hand}">
+                                        <h:commandButton action="#{basicView.doPlayCard(zzz.seq)}" image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
+                                            <f:ajax render="@form" />
+                                        </h:commandButton>    
+                                    </c:forEach>
+                                </h:panelGrid>
+
+                            </td>
+                            <td>    <h:panelGrid  columns="13" cellpadding="0">
+                                    <c:forEach  var="zzz" items="#{basicView.playerAAA手牌軍事牌區}">
+                                        <h:commandButton action="#{basicView.doNOTHING(zzz.seq)}" image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
+                                            <f:ajax render="@this" />
+                                        </h:commandButton>    
+                                    </c:forEach>
+                                </h:panelGrid></td>
+                        </tr>
+
+                    </table>
+                    <table>
+                        <tr>
+                            <td>實驗室 </td>
+                            <td>神廟區 </td>
+                            <td>農場區 </td>
+                            <td>礦山區 </td>
+                            <td>步兵區 </td>
+
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <h:panelGrid  columns="13" cellpadding="0">
+                                    <c:forEach  var="zzz" items="#{basicView.playerAAA實驗室}">
+                                        <h:commandButton action="#{basicView.doNOTHING(zzz.seq)}" image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
+                                            <f:ajax render="@this" />
+                                        </h:commandButton>    
+                                    </c:forEach>
+                                </h:panelGrid>
+
+                            </td>
+                            <td>
+                                <h:panelGrid  columns="13" cellpadding="0">
+                                    <c:forEach  var="zzz" items="#{basicView.playerAAA神廟區}">
+                                        <h:commandButton action="#{basicView.doNOTHING(zzz.seq)}" image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
+                                            <f:ajax render="@this" />
+                                        </h:commandButton>    
+                                    </c:forEach>
+                                </h:panelGrid>                                
+                            </td>
+                            <td>
+                                <h:panelGrid  columns="13" cellpadding="0">
+                                    <c:forEach  var="zzz" items="#{basicView.playerAAA農場區}">
+                                        <h:commandButton action="#{basicView.doNOTHING(zzz.seq)}" image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
+                                            <f:ajax render="@this" />
+                                        </h:commandButton>    
+                                    </c:forEach>
+                                </h:panelGrid>
+
+
+                            </td>
+                            <td>
+
+                                <h:panelGrid  columns="13" cellpadding="0">
+                                    <c:forEach  var="zzz" items="#{basicView.playerAAA礦山區}">
+                                        <h:commandButton action="#{basicView.doNOTHING(zzz.seq)}" image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
+                                            <f:ajax render="@this" />
+                                        </h:commandButton>    
+                                    </c:forEach>
+                                </h:panelGrid>
+
+
+                            </td>
+                            <td>
+                                <h:panelGrid  columns="13" cellpadding="0">
+                                    <c:forEach  var="zzz" items="#{basicView.playerAAA步兵區}">
+                                        <h:commandButton action="#{basicView.doNOTHING(zzz.seq)}" image="#{basicView.imgBaseDir}#{zzz.id}#{basicView.imgExt}" >
+                                            <f:ajax render="@this" />
+                                        </h:commandButton>    
+                                    </c:forEach>
+                                </h:panelGrid>
+                            </td>
+                        </tr>
+
+
+                    </table>
+
+
                 </p:tab>
                 <p:tab title="BBB">
                     <h1>BBB area</h1>    
@@ -106,7 +239,7 @@
                             </h:commandButton>    
                         </c:forEach>
                     </h:panelGrid>
-            
+
                 </p:tab>
 
             </p:tabView>

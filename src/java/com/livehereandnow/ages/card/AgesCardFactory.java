@@ -64,8 +64,10 @@ public class AgesCardFactory {
         temp.setId(1000);
 
         temp.setName("");
+        temp.setSeq(0);
         temp.setAge(4);
         temp.setTag("");
+        
         return temp;
 
     }

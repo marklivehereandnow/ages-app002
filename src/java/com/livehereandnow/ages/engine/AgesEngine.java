@@ -372,7 +372,31 @@ public class AgesEngine {
         return true;
     }
 
+    public boolean actTakeCardBySeq(int seq) {
+        AgesCard ac;
+        for (int k = 0; k < 13; k++) {
+            ac = field.getCardRow().get(k);
+            if (ac.getSeq() == seq) {
+                return actTakeCard(k);
+            }
+        }
+
+        return true;
+    }
+
+    public boolean actPlayCardBySeq(int seq) {
+        int index=0;
+        for (AgesCard ac : field.getCurrentPlayer().get手牌內政牌區()) {
+            if (ac.getSeq() == seq) {
+                return actPlayCard(index);
+            }
+            index++;
+        }
+        return true;
+    }
+
     private boolean actTakeCard(int val) {
+
         int[] cardCost = {1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3};
         int cost = cardCost[val];
         player = field.getCurrentPlayer();
